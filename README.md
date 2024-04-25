@@ -16,3 +16,4 @@
 15. 4 bit Binary Multiplication
 16. Increment Unit
 17. Decrement Unit
+18. 4 Bit Restoring Division
