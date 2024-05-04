@@ -18,3 +18,4 @@
 17. Decrement Unit
 18. 4 Bit Restoring Division
 19. AU
+20. 128 x 8 bit RAM chip
