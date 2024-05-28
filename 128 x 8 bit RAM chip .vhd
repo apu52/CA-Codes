@@ -17,56 +17,54 @@
 -- Additional Comments: 
 --
 ----------------------------------------------------------------------------------
-library IEEE;
-use IEEE.STD_LOGIC_1164.ALL;
-use IEEE.STD_LOGIC_arith.ALL;
-use IEEE.STD_LOGIC_unsigned.ALL;
 
+LIBRARY IEEE;
+USE IEEE.STD_LOGIC_1164.ALL;
 
 -- Uncomment the following library declaration if using
 -- arithmetic functions with Signed or Unsigned values
---use IEEE.NUMERIC_STD.ALL;
+USE IEEE.NUMERIC_STD.ALL;
 
 -- Uncomment the following library declaration if instantiating
--- any Xilinx primitives in this code.
+-- any Xilinx leaf cells in this code.
 --library UNISIM;
 --use UNISIM.VComponents.all;
 
-entity ramchip is
-    Port ( clk : in  STD_LOGIC;
-           cs : in  STD_LOGIC;
-           r : in  STD_LOGIC;
-           w : in  STD_LOGIC;
-           clr : in  STD_LOGIC;
-           abus : in  STD_LOGIC_VECTOR (6 downto 0);
-           dbus : inout  STD_LOGIC_VECTOR (7 downto 0));
-end ramchip;
+ENTITY RAM IS
+	PORT (
+		CLK  : IN    STD_LOGIC;
+		CS   : IN    STD_LOGIC;
+		R    : IN    STD_LOGIC;
+		W    : IN    STD_LOGIC;
+		CLR  : IN    STD_LOGIC;
+		ADDR : IN    STD_LOGIC_VECTOR (6 DOWNTO 0);
+		DBUS : INOUT STD_LOGIC_VECTOR (7 DOWNTO 0));
+END RAM;
 
-architecture Behavioral of ramchip is
+ARCHITECTURE Behavioral OF RAM IS
+	TYPE RAM_ARR IS ARRAY (0 TO 127) OF STD_LOGIC_VECTOR (7 DOWNTO 0);
+	SIGNAL RAM_DATA : RAM_ARR;
+BEGIN
 
-type ma is array (0 to 127) of
-STD_LOGIC_VECTOR(7 downto 0);
-signal mem : ma;
-begin
-process(clk)
+	PROCESS (CLK)
+	BEGIN
 
-begin
+		IF (rising_edge(CLK) AND CS = '1') THEN
+			IF W = '1' THEN
+				RAM_DATA(to_integer(unsigned(ADDR))) <= DBUS;
+			END IF;
 
-if(rising_edge(clk) and cs = '1') then
-  if w = '1' then 
-mem(conv_integer(unsigned(abus)))<= dbus;
-end if;
-if r= '1' then 
-dbus <= mem(conv_integer(unsigned(abus)));
-end if;
-if clr = '1' then
-for i in 0 to 127 loop 
-mem(i) <= "UUUUUUUU";
-end loop;
-end if;
-end if;
-end process;
+			IF R = '1' THEN
+				DBUS <= RAM_DATA(to_integer(unsigned(ADDR)));
+			END IF;
 
+			IF CLR = '1' THEN
+				FOR i IN 0 TO 127 LOOP
+					RAM_DATA(i) <= "UUUUUUUU";
+				END LOOP;
+			END IF;
+		END IF;
 
-end Behavioral;
+	END PROCESS;
+END Behavioral;
 
