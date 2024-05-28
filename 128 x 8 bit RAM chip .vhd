@@ -2,22 +2,21 @@
 -- Company: 
 -- Engineer: 
 -- 
--- Create Date:    20:04:12 05/04/2024 
+-- Create Date: 28.05.2024 19:33:12
 -- Design Name: 
--- Module Name:    ramchip - Behavioral 
+-- Module Name: RAM chip - Behavioral
 -- Project Name: 
 -- Target Devices: 
--- Tool versions: 
+-- Tool Versions: 
 -- Description: 
---
+-- 
 -- Dependencies: 
---
--- Revision: 
+-- 
+-- Revision:
 -- Revision 0.01 - File Created
--- Additional Comments: 
---
+-- Additional Comments:
+-- 
 ----------------------------------------------------------------------------------
-
 LIBRARY IEEE;
 USE IEEE.STD_LOGIC_1164.ALL;
 
@@ -67,4 +66,3 @@ BEGIN
 
 	END PROCESS;
 END Behavioral;
-
